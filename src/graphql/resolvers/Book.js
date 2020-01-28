@@ -4,7 +4,7 @@ const helperFunctions = require('./helpers');
 const resolvers = {
 	Book: {	
 		__resolveType: (obj) => {
-			console.log('(2) DOS');
+			
 			switch (obj.category) {
 				case 'COLLECTION':
 					
@@ -48,18 +48,47 @@ const resolvers = {
 	},
 	CollectionBook: {
 		numberOfVolumes: book => {
-			console.log('(3) TRES');
+			
 			return book.volumes;
 		},
 		pricePerVolume: book => {
-			console.log('(4) CUATRO');
+			
 			return Number.parseFloat(book.pricePerVolume);
 		}
 	},
 	SchoolBook: {
 		uniquePrice: book => {
-			console.log('(5) CINCO');
+			
 			return Number.parseFloat(book.uniquePrice);
+		}
+	},
+	Mutation: {
+		addNewBook: (parent, { input }, { crudOperations }) => {
+
+			try {
+					
+				const book = crudOperations.book.addNewBook(input);
+
+				return {
+					code: '200',
+					success: true,
+					message: 'new Book added successfully!',
+					book
+				};
+
+			} catch (error) {
+				
+				return {
+					code: error.code,
+					success: false,
+					message: error.message,
+					author: null
+				};
+
+			}	
+
+
+
 		}
 	}	
 };

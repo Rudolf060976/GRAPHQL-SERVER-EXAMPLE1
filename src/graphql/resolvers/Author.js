@@ -1,4 +1,5 @@
 const helperFunctions = require('./helpers');
+const { ApolloError } = require('apollo-server-express');
 
 
 const resolvers = {
@@ -24,6 +25,33 @@ const resolvers = {
 			}
 
 			*/
+
+		}
+	},
+	Mutation: {
+		addNewAuthor: async (parent, { name }, { crudOperations }) => {
+
+			try {
+				
+				const author = crudOperations.author.addNewAuthor(name);
+
+				return {
+					code: '200',
+					success: true,
+					message: 'new Author added successfully!',
+					author
+				};
+
+			} catch (error) {
+				
+				return {
+					code: error.code,
+					success: false,
+					message: error.message,
+					author: null
+				};
+
+			}	
 
 		}
 	},

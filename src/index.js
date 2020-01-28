@@ -18,6 +18,8 @@ const models = require('./database/models');
 
 const seedDatabase = require('./database/seedDatabase');
 
+const crudOperations = require('./database/crud_operations');
+
 const app = express();
 
 app.use(cors());
@@ -47,7 +49,8 @@ connectDB().then( async () => {
 
 			return {
 				models,
-				ObjectID
+				ObjectID,
+				crudOperations
 			}
 
 		}

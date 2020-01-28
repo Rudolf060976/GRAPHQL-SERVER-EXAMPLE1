@@ -13,6 +13,45 @@ const schema = gql`
 		getBooksByAuthor(authorId: ID!): [Book!] 
 	}
 
+	type Mutation {
+		addNewAuthor(name: String!): AddNewAuthorMutationResponse!
+		addNewBook(input: newBookInput): AddNewBookMutationResponse!	
+	}
+
+	"******* FOR MUTATIONS ***********"
+
+	interface MutationResponse {
+		code: String!
+		success: Boolean!
+		message: String!
+	}
+
+	type AddNewAuthorMutationResponse implements MutationResponse {
+		code: String!
+		success: Boolean!
+		message: String!
+		author: Author
+	}
+
+	type AddNewBookMutationResponse implements MutationResponse {
+		code: String!
+		success: Boolean!
+		message: String!
+		book: Book
+	}
+
+	input newBookInput {
+		title: String!
+		authorId: ID!
+		category: enumCategory!
+		volumes: Int		
+		sold: EnumSellingPeriod
+		pricePerVolume: Float
+		target: EnumTarget
+		uniquePrice: Float
+	}	
+
+
 	"********** AUTHOR CONNECTIONS ********"
 
 	type AuthorConnection {
@@ -48,25 +87,7 @@ const schema = gql`
 		node: Book!,
 		cursor: String!
 	}
-
 	
-
-	type Mutation {
-		addNewAuthor(name: String!): Author
-		addNewBook(input: newBookInput): [Book]		
-	}
-
-	input newBookInput {
-		title: String!
-		authorId: ID!
-		category: enumCategory!
-		volumes: Int		
-		sold: EnumSellingPeriod
-		pricePerVolume: Float
-		target: EnumTarget
-		uniquePrice: Float
-	}	
-
 	enum enumCategory {
 		COLLECTION
 		SCHOOL
