@@ -5,14 +5,15 @@ const { ObjectID } = require('mongodb');
 const { ApolloError } = require('apollo-server-express');
 
 
-const addNewAuthor = async (name) => {
+const addNewAuthor = async (name, born) => {
 
 	try {
 		
 		const author = await models.Author.create([
 			{
 				_id: new ObjectID(),
-				name 
+				name,
+				born: new Date(born) 
 			}
 		])
 

@@ -11,6 +11,10 @@ const authorSchema = new mongoose.Schema({
 	createdAt: {
 		type: types.Date,
 		default: new Date()
+	},
+	born: {
+		type: types.Date,
+		default: new Date()
 	}
 });
 

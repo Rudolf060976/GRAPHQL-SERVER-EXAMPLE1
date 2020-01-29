@@ -2,6 +2,8 @@ const { gql } = require('apollo-server-express');
 
 
 const schema = gql`
+	scalar Date
+	
 	
 	type Query {
 		getAllAuthors(first: Int, last: Int, after: String, before: String): AuthorConnection!
@@ -14,7 +16,7 @@ const schema = gql`
 	}
 
 	type Mutation {
-		addNewAuthor(name: String!): AddNewAuthorMutationResponse!
+		addNewAuthor(name: String!, born: String!): AddNewAuthorMutationResponse!
 		addNewBook(input: newBookInput): AddNewBookMutationResponse!	
 	}
 
@@ -103,7 +105,8 @@ const schema = gql`
 	type Author {
 		id: ID!
 		name: String!
-		books: [Book]
+		born: Date!
+		books: [Book]		
 	}
 
 	type CollectionBook implements Book {

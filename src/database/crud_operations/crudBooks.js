@@ -7,7 +7,7 @@ const { ApolloError } = require('apollo-server-express');
 
 const addNewBook = async (inputData) => {
 
-	/* inputDate {
+	/* inputData {
 		title,
 		authorId,
 		category,
@@ -21,10 +21,18 @@ const addNewBook = async (inputData) => {
 	*/
 
 	let book = null;
+
+	const { title, authorId, category } = inputData;
 	
+	if (!title || !authorId || !category) {
+
+		throw new ApolloError('Bad Arguments','400');
+
+	}
+
 	try {
-	
-		const { title, authorId, category } = inputData;
+			
+		
 
 		switch (category) {
 			case 'COLLECTION':

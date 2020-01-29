@@ -29,11 +29,11 @@ const resolvers = {
 		}
 	},
 	Mutation: {
-		addNewAuthor: async (parent, { name }, { crudOperations }) => {
+		addNewAuthor: async (parent, { name, born }, { crudOperations }) => {
 
 			try {
 				
-				const author = crudOperations.author.addNewAuthor(name);
+				const author = crudOperations.author.addNewAuthor(name, born);
 
 				return {
 					code: '200',
