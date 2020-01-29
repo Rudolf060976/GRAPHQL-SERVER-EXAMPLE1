@@ -4,7 +4,7 @@ const express = require('express');
 
 const { ObjectID } = require('mongodb');
 
-const { ApolloServer, gql } = require('apollo-server-express');
+const { ApolloServer } = require('apollo-server-express');
 
 const cors = require('cors');
 
@@ -12,7 +12,7 @@ const schema = require('./graphql/schema');
 
 const resolvers = require('./graphql/resolvers');
 
-const { connectDB, mongoose } = require('./database/mongoose');
+const { connectDB } = require('./database/mongoose');
 
 const models = require('./database/models');
 
