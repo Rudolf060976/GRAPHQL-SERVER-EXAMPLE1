@@ -17,7 +17,14 @@ const schema = gql`
 
 	type Mutation {
 		addNewAuthor(name: String!, born: String!): AddNewAuthorMutationResponse!
-		addNewBook(input: newBookInput): AddNewBookMutationResponse!	
+		addNewBook(input: newBookInput): AddNewBookMutationResponse!
+		uploadAuthorImage(authorId: ID!, file: Upload!): File
+	}
+
+	type File {
+		filename: String
+		mimetype: String
+		encoding: String
 	}
 
 	"******* FOR MUTATIONS ***********"
@@ -106,7 +113,8 @@ const schema = gql`
 		id: ID!
 		name: String!
 		born: Date!
-		books: [Book]		
+		books: [Book]
+		images: [ID!]		
 	}
 
 	type CollectionBook implements Book {

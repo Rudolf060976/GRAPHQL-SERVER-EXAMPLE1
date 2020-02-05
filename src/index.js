@@ -25,6 +25,7 @@ const app = express();
 app.use(cors());
 
 
+
 connectDB().then( async () => {
 
 	console.log("CONNECTED TO MONGODB!!");	

@@ -11,5 +11,4 @@ const customDateResolver = {
 };
 
 
-
 module.exports = [customDateResolver, authorResolvers, bookResolvers];

@@ -53,6 +53,31 @@ const resolvers = {
 
 			}	
 
+		},
+		uploadAuthorImage: async (parent, { authorId, file }) => {
+
+			const { filename, mimetype, encoding, createReadStream } = await file;
+								
+			/*
+
+			1. CREAR UN ID PARA LA IMAGEN
+			2. ALMACENAR LA IMAGEN EN GRIDFS
+			3. BUSCAR EL AUTHOR Y AGREGAR EL ID DE LA IMAGEN EN EL FIELD images DEL AUTHOR.
+
+			*/
+
+			const stream = createReadStream();
+
+			const output = {
+				filename,
+				mimetype,
+				encoding
+			};
+
+			console.log('authorId :', authorId);
+
+			return output;
+
 		}
 	},
 	Author: {

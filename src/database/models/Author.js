@@ -15,7 +15,8 @@ const authorSchema = new mongoose.Schema({
 	born: {
 		type: types.Date,
 		default: new Date()
-	}
+	},
+	images: [types.ObjectId]	
 });
 
 const Author = mongoose.model('Author', authorSchema);
