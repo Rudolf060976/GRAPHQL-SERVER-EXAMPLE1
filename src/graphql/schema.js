@@ -13,6 +13,7 @@ const schema = gql`
 		getBooksById(id: ID!): [Book!]
 		getBookById(id: ID!): Book!
 		getBooksByAuthor(authorId: ID!): [Book!] 
+		getAuthorImages(authorId: ID!): [ID]
 	}
 
 	type Mutation {
@@ -23,8 +24,7 @@ const schema = gql`
 
 	type File {
 		filename: String
-		mimetype: String
-		encoding: String
+		mimetype: String		
 	}
 
 	"******* FOR MUTATIONS ***********"

@@ -26,6 +26,15 @@ const resolvers = {
 
 			*/
 
+		},
+		getAuthorImages: async (parent, { authorId }, { MongoGridFSStore, mongoose, crudOperations, models, ObjectID }) => {
+
+			const author = await models.Author.findById(authorId);
+
+			const images = author.images;
+						
+			return images;
+
 		}
 	},
 	Mutation: {
@@ -54,28 +63,34 @@ const resolvers = {
 			}	
 
 		},
-		uploadAuthorImage: async (parent, { authorId, file }) => {
+		uploadAuthorImage: async (parent, { authorId, file }, { mongoose, ObjectID, MongoGridFSStore, crudOperations }) => {
 
-			const { filename, mimetype, encoding, createReadStream } = await file;
-								
-			/*
+			const { filename, mimetype, createReadStream } = await file;
+			
+			
 
-			1. CREAR UN ID PARA LA IMAGEN
-			2. ALMACENAR LA IMAGEN EN GRIDFS
-			3. BUSCAR EL AUTHOR Y AGREGAR EL ID DE LA IMAGEN EN EL FIELD images DEL AUTHOR.
+			// 1. CREAR UN ID PARA LA IMAGEN
 
-			*/
+			const id = new ObjectID();  // ESTE ES EL ID PARA EL ARCHIVO DE IMAGEN QUE SE GUARDARÁ EN GRIDFS
 
-			const stream = createReadStream();
+			const gfs = new MongoGridFSStore(mongoose.connection.db, { bucketName: 'images' });
+						
+			// 2. ALMACENAR LA IMAGEN EN GRIDFS
 
+			const result = await gfs.write(createReadStream(), { id, filename: filename + new Date().toISOString() });
+
+			// 3. BUSCAR EL AUTHOR Y AGREGAR EL ID DE LA IMAGEN EN EL FIELD images DEL AUTHOR.
+
+
+				crudOperations.author.addAuthorImageToImagesArray(authorId, id);
+			
+			
 			const output = {
 				filename,
-				mimetype,
-				encoding
+				mimetype				
 			};
 
-			console.log('authorId :', authorId);
-
+			
 			return output;
 
 		}

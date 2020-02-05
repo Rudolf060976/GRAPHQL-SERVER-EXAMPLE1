@@ -12,7 +12,9 @@ const schema = require('./graphql/schema');
 
 const resolvers = require('./graphql/resolvers');
 
-const { connectDB } = require('./database/mongoose');
+const { connectDB, mongoose } = require('./database/mongoose');
+
+const MongoGridFSStore = require('mongo-gridfs-storage');
 
 const models = require('./database/models');
 
@@ -30,7 +32,7 @@ connectDB().then( async () => {
 
 	console.log("CONNECTED TO MONGODB!!");	
 
-	const eraseDatabase = true;
+	const eraseDatabase = false;
 
 	if (eraseDatabase) {
 
@@ -40,7 +42,7 @@ connectDB().then( async () => {
 		]);
 	}
 
-	seedDatabase();
+	// seedDatabase();
 
 
 	const server = new ApolloServer({
@@ -51,7 +53,9 @@ connectDB().then( async () => {
 			return {
 				models,
 				ObjectID,
-				crudOperations
+				crudOperations,
+				MongoGridFSStore,
+				mongoose				
 			}
 
 		}
